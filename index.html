@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input class="form-control text-center" id="generate-pin-value"  type="text">
+                    <button id="generate-pin" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input class="form-control text-center" id="input-value"type="text">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                              <div onclick="inputValueFromNumber('seven')" id="seven" class="button">7</div>
+                              <div onclick="inputValueFromNumber('eight')" id="eight"class="button">8</div>
+                              <div onclick="inputValueFromNumber('nine')" id="nine"class="button">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div onclick="inputValueFromNumber('four')" id="four"class="button">4</div>
+                              <div onclick="inputValueFromNumber('five')" id="five" class="button">5</div>
+                              <div onclick="inputValueFromNumber('six')" id="six" class="button">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div onclick="inputValueFromNumber('one')" id="one"class="button">1</div>
+                              <div onclick="inputValueFromNumber('two')" id="two" class="button">2</div>
+                              <div onclick="inputValueFromNumber('three')" id="three"class="button">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div onclick="clearOneByOne()" class="button">&lt;</div>
+                                <div onclick="inputValueFromNumber('zero')" id="zero" class="button">0</div>
+                                <div id="clear"class="button">C</div>
+                            </div>
+                            <div>
+                                <button id="submit-btn"type="submit" class="submit-btn">Submit</button>
+                                <p class="action-left"><span id="case">3</span> try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section">
+            <p class="notify" id="wrong">❌ Pin Didn't Match, Please try again</p>
+            <p class="notify" id="correct">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+   
+    <script>
+    //    clearOneByOne();
+
+        function clearOneByOne(){
+            var inputValue=document.getElementById('input-value').value;
+            document.getElementById('input-value').value=inputValue.substring(0,inputValue.length-1);
+            document.getElementById('correct').style.display="none";
+            document.getElementById('wrong').style.display="none";
+        }
+        function inputValueFromNumber(id){
+             const value=document.getElementById(id).innerText;
+             const inputValue=document.getElementById('input-value').value;
+             document.getElementById('input-value').value=inputValue+value;
+
+        }
+        document.getElementById('generate-pin').addEventListener("click",function(){
+           let x = Math.floor((Math.random() *(9999-1000+1) + 1000));
+           var result=document.getElementById('generate-pin-value').value=x;      
+        });
+
+       
+    
+
+
+
+
+        
+        const submitButton=document.getElementById('submit-btn');
+        submitButton.addEventListener("click",function(){
+            const inputValue=document.getElementById('input-value').value;
+            const valueInput=parseInt(inputValue);
+            const generatePin=document.getElementById('generate-pin-value').value;
+            const pinGenerate=parseInt(generatePin);
+            if(valueInput === pinGenerate){
+                document.getElementById('correct').style.display="block";
+            }else{
+
+                document.getElementById('wrong').style.display="block";
+                
+                var caseNumber=document.getElementById('case').innerText;
+                const caseCount=document.getElementById('case').innerText=(parseInt(caseNumber))-1;
+                if(caseCount == 0){
+                    const button=document.getElementById('submit-btn').disabled=true;
+                    // button.disabled = true;
+
+
+                }
+                
+
+
+
+            }
+        });
+        document.getElementById('clear').addEventListener("click",function(){
+            document.getElementById('input-value').value='';
+            document.getElementById('correct').style.display="none";
+            document.getElementById('wrong').style.display="none";
+        });
+        
+
+    
+    </script>
+</body>
+</html>
